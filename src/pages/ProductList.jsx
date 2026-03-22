@@ -17,9 +17,11 @@ const ProductList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
+    const API_BASE = import.meta?.env?.VITE_API_BASE_URL || "https://keyboardwarriors-backend.onrender.com";
+
     // Fetch products when component loads
     useEffect(() => {
-        fetch("http://localhost:5000/api/products")
+        fetch(`${API_BASE}/api/products`)
             .then((res) => {
                 if (!res.ok) throw new Error(`status ${res.status}`);
                 return res.json();
