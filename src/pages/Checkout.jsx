@@ -3,158 +3,195 @@ import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 
 const Checkout = () => {
-  // Get cart and clear function from global context
   const { cart, clearCart } = useContext(CartContext);
-
-  // Form state (controlled components)
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    address: '',
-    phone: '',
-    payment: 'cod',
-  });
-
+  const [form, setForm] = useState({ name: '', email: '', address: '', phone: '', payment: 'cod' });
   const [submitted, setSubmitted] = useState(false);
   const [finalTotal, setFinalTotal] = useState(0);
 
-  // Compute total price
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const tax = subtotal * 0.12; // 12% VAT
-  const total = subtotal + tax;
+  const tax = subtotal * 0.12;
+  const shipping = subtotal > 0 ? 150 : 0;
+  const total = subtotal + tax + shipping;
 
-  // Handle form input change
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value, // dynamic update
-    });
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle form submit
   const handleSubmit = (e) => {
-    e.preventDefault(); // stop page reload
+    e.preventDefault();
 
     if (!form.name || !form.email || !form.address || !form.phone) {
-      alert('Please complete all fields');
+      setSubmitted('incomplete');
       return;
     }
 
-    // Save total BEFORE clearing cart
     setFinalTotal(total);
-
-    // Order is valid → clear the cart and show confirmation
-    clearCart(); // reset cart to zero
+    clearCart();
     setSubmitted(true);
   };
 
-  // After successful order
-  if (submitted) {
+  if (submitted === 'incomplete') {
     return (
-      <div className="container mt-5 text-center">
-        <h2>Order Confirmed!</h2>
-        <p>Thank you, {form.name}. Your order has been placed.</p>
-        <p>Total Amount: ₱{finalTotal.toFixed(2)}</p>
-
-        {/* Back to Home Button */}
-        <Link to="/" className="btn btn-primary mt-3">
-          Continue Shopping
+      <div className="container py-5">
+        <div className="alert alert-warning text-center">
+          Please complete all required information before placing order.
+        </div>
+        <Link to="/checkout" className="btn btn-primary">
+          Back to checkout
         </Link>
       </div>
     );
   }
 
+  if (submitted) {
+    return (
+      <div className="container py-5">
+        <div className="text-center p-4 rounded shadow-sm bg-light">
+          <h2 className="mb-3 text-success">Order Confirmed</h2>
+          <p className="lead">Thanks, {form.name}! Your order was successfully placed.</p>
+          <p className="fs-5">Total paid: <strong>₱{finalTotal.toFixed(2)}</strong></p>
+          <p className="text-muted">Your items will be ready for shipment shortly.</p>
+          <Link to="/" className="btn btn-primary mt-3">Continue Shopping</Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="container mt-4">
-      <h2>Checkout</h2>
+    <div className="container py-5">
+      <div className="row gy-4">
+        <div className="col-lg-7">
+          <div className="card border-0 shadow-sm">
+            <div className="card-body">
+              <h2 className="mb-4">Checkout</h2>
 
-      <div className="row">
-        {/* Checkout Form */}
-        <div className="col-md-6">
-          <h4>Customer Information</h4>
+              <h5 className="mb-3">Customer Details</h5>
+              <form onSubmit={handleSubmit}>
+                <div className="row g-3">
+                  <div className="col-md-6">
+                    <label htmlFor="name" className="form-label">Full Name</label>
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      className="form-control"
+                      value={form.name}
+                      onChange={handleChange}
+                      placeholder="Juan Dela Cruz"
+                    />
+                  </div>
 
-          <form onSubmit={handleSubmit}>
-            <div className="mb-2">
-              <label className="form-label">Name</label>
-              <input
-                type="text"
-                name="name"
-                className="form-control"
-                value={form.name}
-                onChange={handleChange}
-              />
+                  <div className="col-md-6">
+                    <label htmlFor="email" className="form-label">Email Address</label>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      className="form-control"
+                      value={form.email}
+                      onChange={handleChange}
+                      placeholder="juan@example.com"
+                    />
+                  </div>
+
+                  <div className="col-12">
+                    <label htmlFor="address" className="form-label">Delivery Address</label>
+                    <textarea
+                      id="address"
+                      name="address"
+                      rows="3"
+                      className="form-control"
+                      value={form.address}
+                      onChange={handleChange}
+                      placeholder="Brgy 24, Barangay Highstreet, Makati City"
+                    />
+                  </div>
+
+                  <div className="col-md-6">
+                    <label htmlFor="phone" className="form-label">Phone Number</label>
+                    <input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      className="form-control"
+                      value={form.phone}
+                      onChange={handleChange}
+                      placeholder="0917 123 4567"
+                    />
+                  </div>
+
+                  <div className="col-md-6">
+                    <label htmlFor="payment" className="form-label">Payment Method</label>
+                    <select
+                      id="payment"
+                      name="payment"
+                      className="form-select"
+                      value={form.payment}
+                      onChange={handleChange}
+                    >
+                      <option value="cod">Cash on Delivery</option>
+                      <option value="gcash">GCash</option>
+                      <option value="card">Credit/Debit Card</option>
+                    </select>
+                  </div>
+
+                  <div className="col-12">
+                    <button type="submit" className="btn btn-primary w-100 py-2">
+                      Confirm Purchase
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
-
-            <div className="mb-2">
-              <label className="form-label">Email</label>
-              <input
-                type="email"
-                name="email"
-                className="form-control"
-                value={form.email}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="mb-2">
-              <label className="form-label">Address</label>
-              <textarea
-                name="address"
-                className="form-control"
-                value={form.address}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="mb-2">
-              <label className="form-label">Phone</label>
-              <input
-                type="text"
-                name="phone"
-                className="form-control"
-                value={form.phone}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label">Payment Method</label>
-              <select
-                name="payment"
-                className="form-select"
-                value={form.payment}
-                onChange={handleChange}
-              >
-                <option value="cod">Cash on Delivery</option>
-                <option value="gcash">GCash</option>
-                <option value="card">Credit Card</option>
-              </select>
-            </div>
-
-            <button type="submit" className="btn btn-success w-100">
-              Place Order
-            </button>
-          </form>
+          </div>
         </div>
 
-        {/* Order Summary */}
-        <div className="col-md-6">
-          <h4>Order Summary</h4>
+        <div className="col-lg-5">
+          <div className="card border-0 shadow-sm sticky-top" style={{ top: '80px' }}>
+            <div className="card-body">
+              <h5 className="card-title">Order Summary</h5>
+              <div className="list-group list-group-flush">
+                {cart.length ? cart.map((item) => (
+                  <div key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                      <strong>{item.name}</strong>
+                      <small className="d-block text-muted">Qty: {item.qty}</small>
+                    </div>
+                    <span>₱{(item.price * item.qty).toFixed(2)}</span>
+                  </div>
+                )) : (
+                  <div className="list-group-item text-center text-muted">Your cart is empty.</div>
+                )}
+              </div>
 
-          {cart.map((item) => (
-            <div key={item.id} className="d-flex justify-content-between">
-              <span>
-                {item.name} × {item.qty}
-              </span>
-              <span>₱{(item.price * item.qty).toFixed(2)}</span>
+              <hr />
+
+              <div className="d-flex justify-content-between">
+                <span>Subtotal</span>
+                <strong>₱{subtotal.toFixed(2)}</strong>
+              </div>
+              <div className="d-flex justify-content-between">
+                <span>VAT (12%)</span>
+                <strong>₱{tax.toFixed(2)}</strong>
+              </div>
+              <div className="d-flex justify-content-between">
+                <span>Shipping</span>
+                <strong>₱{shipping.toFixed(2)}</strong>
+              </div>
+
+              <hr />
+
+              <div className="d-flex justify-content-between fs-5">
+                <span className="fw-bold">Total</span>
+                <strong>₱{total.toFixed(2)}</strong>
+              </div>
+
+              <p className="text-muted small mt-3">
+                ※ Orders above ₱20,000 are eligible for expedited shipping.
+              </p>
             </div>
-          ))}
-
-          <hr />
-
-          <p>Subtotal: ₱{subtotal.toFixed(2)}</p>
-          <p>Tax (12%): ₱{tax.toFixed(2)}</p>
-          <h5>Total: ₱{total.toFixed(2)}</h5>
+          </div>
         </div>
       </div>
     </div>
