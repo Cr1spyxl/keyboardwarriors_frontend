@@ -225,6 +225,8 @@ html[data-theme='dark'] .list-group-item.active {
   color: #ffffff !important;
 }
 
+html[data-theme='dark'] .text-dark,
+html[data-theme='dark'] .text-body,
 html[data-theme='dark'] .text-muted,
 html[data-theme='dark'] .muted,
 html[data-theme='dark'] .small,
@@ -233,7 +235,7 @@ html[data-theme='dark'] .card-title,
 html[data-theme='dark'] .card-text,
 html[data-theme='dark'] .lead,
 html[data-theme='dark'] p {
-  color: #cbd5e1 !important;
+  color: #e2e8f0 !important;
 }
 
 html[data-theme='dark'] a,
@@ -241,6 +243,7 @@ html[data-theme='dark'] a:hover,
 html[data-theme='dark'] a:focus {
   color: #93c5fd !important;
 }
+
 
 html[data-theme='dark'] .btn-primary {
   background-color: #2563eb;
