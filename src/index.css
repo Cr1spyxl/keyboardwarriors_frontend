@@ -272,5 +272,43 @@ html[data-theme='dark'] .alert {
   border: 1px solid #334155;
 }
 
+/* checkout + dark-lighter cards readability */
+html[data-theme='dark'] .bg-light,
+html[data-theme='dark'] .card.bg-light,
+html[data-theme='dark'] .alert.bg-light,
+html[data-theme='dark'] .list-group-item.bg-light {
+  background-color: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+html[data-theme='dark'] .text-success {
+  color: #22c55e !important;
+}
+
+html[data-theme='dark'] .text-danger {
+  color: #f87171 !important;
+}
+
+html[data-theme='dark'] .text-center,
+html[data-theme='dark'] .px-4,
+html[data-theme='dark'] .py-4,
+html[data-theme='dark'] .shadow-sm {
+  color: #e2e8f0 !important;
+}
+
+/* smooth corners on dark mode boxes */
+html[data-theme='dark'] .card,
+html[data-theme='dark'] .navbar,
+html[data-theme='dark'] .list-group-item,
+html[data-theme='dark'] .btn,
+html[data-theme='dark'] .alert,
+html[data-theme='dark'] .form-control,
+html[data-theme='dark'] .form-select,
+html[data-theme='dark'] .bg-light {
+  border-radius: 14px !important;
+}
+
+
 
 
