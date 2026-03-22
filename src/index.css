@@ -1,0 +1,192 @@
+:root {
+  font-family: 'Courier New', monospace; /* Techy font */
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light;
+  color: #222222; /* Dark text */
+  background-color: #ffffff; /* White page background */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #00ffff; /* Cyan neon */
+  text-decoration: inherit;
+}
+a:hover {
+  color: #ff00ff; /* Magenta neon */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff; /* White background by request */
+  color: #222222;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #1f3a8a; /* Dark blue headings */
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid #3b82f6;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #ffffff;
+  color: #1f3a8a;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+button:hover {
+  border-color: #1e40af;
+  background-color: #e0e7ff;
+  color: #1e3a8a;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto #00ffff;
+}
+
+.text-neon {
+  color: #1f3a8a;
+  text-shadow: none;
+}
+
+.bg-dark {
+  background-color: #f3f4f6 !important; /* light grey */
+}
+
+.list-group-item {
+  background-color: #ffffff;
+  border-color: #d1d5db;
+  color: #111827;
+}
+
+.list-group-item.active {
+  background-color: rgba(59, 130, 246, 0.85);
+  border-color: #3b82f6;
+  color: #ffffff;
+  opacity: 0.9;
+}
+
+.card {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #111827;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  opacity: 1;
+  background-color: transparent;
+  box-shadow: 0 12px 20px rgba(0,0,0,0.08);
+}
+
+.list-group-item.active {
+  background-color: rgba(59, 130, 246, 0.2);
+  border-color: #3b82f6;
+  color: #111827;
+  opacity: 1;
+}
+
+.carousel-control-prev, .carousel-control-next {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+.carousel-control-prev:hover, .carousel-control-next:hover {
+  background-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.card .text-warning {
+  color: #f59e0b !important;
+}
+
+.card .text-danger {
+  color: #dc2626 !important;
+}
+
+/* Removed theme override that forced white text and dark background on some systems */
+
+.product-img-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.product-img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.product-img-wrapper:hover .product-img {
+  transform: scale(1.1);
+}
+
+.sale-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ff0000;
+  color: white;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+/* Smooth fade-in animation */
+.fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply only on mobile and tablets (below lg breakpoint) */
+@media (max-width: 991.98px) {
+  body {
+    padding-bottom: 70px;
+  }
+}
+
+/* Default (Desktop) */
+.store-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.store-subtitle {
+  font-size: 1.2rem;
+}
+
+/* Mobile View */
+@media (max-width: 991.98px) {
+  .store-title {
+    font-size: 1.5rem;
+  }
+
+  .store-subtitle {
+    font-size: 0.9rem;
+  }
+}
+
+
+
